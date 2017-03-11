@@ -199,4 +199,66 @@
 	};
 
 	
+	function walkElementsLinear (func, node) {
+		var rootNode = node || window.document;
+		var nodes = rootNode.getElementsByClassName("*");
+		for (var i = 0; i < nodes.length; i++) {
+			func.call(nodes[i]);
+		}
+	};
+	window['JWH']['walkElementsLinear'] = walkElementsLinear;
+
+
+	function walkTheDOMRecursive (func, node, depth, returnedFromParent) {
+		var rootNode = node || window.document;
+		var returnedFromParent = func.call(rootNode, depth++, returnedFromParent);
+		var node = rootNode.firstChild;
+		while (node) {
+			walkTheDOMRecursive(func, node, depth, returnedFromParent);
+			node = node.nextSibling;
+		}
+	};
+	window['JWH']['walkTheDOMRecursive'] = walkTheDOMRecursive;
+
+
+	function walkTheDOMWithAttributes (node, func, depth, returnedFromParent) {
+		var rootNode = node || window.document;
+		returnedFromParent = func(rootNode, depth++, returnedFromParent);
+		if (rootNode.attributes) {
+			for (var i = 0; i < rootNode.attributes.length; i++) {
+				walkTheDOMWithAttributes(rootNode.attributes[i], func, depth-1, returnedFromParent);
+			}
+		}
+		if (rootNode.nodeType != JWH.node.ATTRIBUTE_NODE) {
+			node = rootNode.firstChild;
+			while (node) {
+				walkTheDOMWithAttributes(node, func, depth, returnedFromParent);
+				node = node.nextSibling;
+			}
+		}
+	};
+	window['JWh']['walkTheDOMWithAttributes'] = walkTheDOMWithAttributes;
+
+	
+	//把word-word转换为wordWord
+	function camelize(s) {
+		return s.replace(/-(\w)/g, function(strMatch, pl){
+			return pl.toUpperCase();
+		});
+	};
+	window['JWH']['camelize'] = camelize;
 })();
+
+//重复一个字符串
+if (!String.repeat) {
+	String.prototype.repeat = function(l) {
+		return new Array(L+L).join(this);
+	};
+}
+
+//清除结尾和开头的空白符
+if (!String.trim) {
+	String.prototype.trim = function() {
+		return this.replace(/^\s+|\s+$/g, '');
+	};
+}
