@@ -24,7 +24,7 @@
 
 			//如果该参数是一个字符串那假设他是一个id
 			if (typeof element ==='string') {
-				element = document.getElementById();
+				element = document.getElementById(element);
 			}
 
 			//如果只提供一个参数则立即返回这个元素
@@ -45,6 +45,7 @@
 	function addEvent (node, type, listener) {
 		//使用isCompatitible()检查兼容性以保证平稳退化
 		if (!isCompatible()) { return false; }
+		if(!(node = $(node))) return false;
 
 		if (node.addEventListener) { 
 			//W3C的方法
@@ -237,7 +238,7 @@
 			}
 		}
 	};
-	window['JWh']['walkTheDOMWithAttributes'] = walkTheDOMWithAttributes;
+	window['JWH']['walkTheDOMWithAttributes'] = walkTheDOMWithAttributes;
 
 	
 	//把word-word转换为wordWord
@@ -252,7 +253,7 @@
 //重复一个字符串
 if (!String.repeat) {
 	String.prototype.repeat = function(l) {
-		return new Array(L+L).join(this);
+		return new Array(l+l).join(this);
 	};
 }
 

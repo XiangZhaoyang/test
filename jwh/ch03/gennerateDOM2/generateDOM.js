@@ -42,7 +42,7 @@
 		//使用processNode()处理domRoot中的所有子节点
 		var node = domRoot.firstChild;
 		while (node) {
-			JWh.walkTheDOMRecursive(processNode, node, 0, strRoot);
+			JWH.walkTheDOMRecursive(processNode, node, 0, strRoot);
 			node = node.nextSibling;
 		}
 
@@ -56,10 +56,10 @@
 	function processAttribute (tabCount, refParent) {
 
 		//跳过文本节点
-		if (this.nodeType != JWh.node.ATTRIBUTE_NODE) return;
+		if (this.nodeType != JWH.node.ATTRIBUTE_NODE) return;
 
 		//取得属性值
-		var attrValue = (this.nodeValue ? encode(this.nodeValue.trime()) : '');
+		var attrValue = (this.nodeValue ? encode(this.nodeValue.trim()) : '');
 		if (this.nodeName == 'cssText') alert('true');
 
 		//如果没有值则返回
@@ -135,7 +135,7 @@
 
 		//确定节点类型并处理元素和文本节点
 		switch(this.nodeType) {
-			case JWh.node.ELEMENT_NODE:
+			case JWH.node.ELEMENT_NODE:
 				//计数器加1并创建一个使用标签和计数器的值
 				//表示的新变量，例如：a1,a2,a3
 				if (nodeNameCounters[this.nodeName]) {
@@ -159,7 +159,7 @@
 				//并使用processAtrribute()方法遍历他们的dom树
 				if (this.attributes) {
 					for (var i = 0; i < this.attributes.length; i++) {
-						JWh.walkTheDOMRecursive(
+						JWH.walkTheDOMRecursive(
 							processAttribute,
 							this.attributes[i],
 							tabCount,
@@ -168,7 +168,7 @@
 					}
 				}
 				break;
-			case JWh.node.TEXT_NODE:
+			case JWH.node.TEXT_NODE:
 
 				//检测文本节点中除了
 				//空白符之外的值
@@ -187,9 +187,8 @@
 					//检查是不是$var格式的值
 					value = checkForVarible(value);
 
-					添加创建这个元素的dom代码行
-					domCode += tabs + 'var ' + ref
-					           + ' = document.createTextNode('+ value ');\n ';
+					// 添加创建这个元素的dom代码行
+					domCode += tabs + 'var ' + ref + ' = document.createTextNode('+ value + ');\n ';
 					//将新变量添加到列表中
 					//以便在结果中报告他们
 					newVariables += '' + ref + ';n';
