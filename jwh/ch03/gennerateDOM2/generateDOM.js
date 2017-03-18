@@ -82,7 +82,7 @@
 
 					//对于其他情况则使用setAttribute
 					domCode += tabs + refParent + '.setAttribute(\'' + this.nodeName
-					           + '\', ' + checkForVarible(attrValue) + ');n';
+					           + '\', ' + checkForVarible(attrValue) + ');\n';
 				}
 			break;
 			case 'class':
@@ -191,7 +191,7 @@
 					domCode += tabs + 'var ' + ref + ' = document.createTextNode('+ value + ');\n ';
 					//将新变量添加到列表中
 					//以便在结果中报告他们
-					newVariables += '' + ref + ';n';
+					newVariables += '' + ref + ';\n';
 				} else {
 					//如果不存在值（或者只有空白符）则返回
 					//即这个节点将不会被加入到父节点中
@@ -206,7 +206,7 @@
 
 		//添加将这个节点添加到其父节点的代码
 		if (refParent) {
-			domCode += tabs = refParent + '.appendChild(' + ref + ');n';
+			domCode += tabs = refParent + '.appendChild(' + ref + ');\n';
 		}
 		return ref;
 	}
